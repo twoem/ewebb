@@ -43,7 +43,7 @@ const AdminDashboard = () => {
     fetchData();
   }, [navigate, fetchData]);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const token = localStorage.getItem('adminToken');
       const backendUrl = process.env.REACT_APP_BACKEND_URL;
@@ -71,7 +71,7 @@ const AdminDashboard = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [navigate]);
 
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
