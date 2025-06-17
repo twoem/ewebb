@@ -1,0 +1,12 @@
+<% layout('layout') -%>
+<% title = "EWEBB | Admin Dashboard" %>
+<h2>Upload New File</h2>
+<form action="/admin/upload" method="POST" enctype="multipart/form-data">
+  <label for="docType">Document Type:</label>
+  <select name="docType" required>
+    <option value="public">Public</option>
+    <option value="eulogy">Eulogy (auto expires)</option>
+  </select>
+  <input type="file" name="document" accept=".pdf,.doc,.jpg,.png" required />
+  <button type="submit">Upload</button>
+</form>
