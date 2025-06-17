@@ -41,7 +41,7 @@ const AdminDashboard = () => {
     }
 
     fetchData();
-  }, [navigate, fetchData]);
+  }, [fetchData]);
 
   const fetchData = useCallback(async () => {
     try {
