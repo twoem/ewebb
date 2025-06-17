@@ -10,14 +10,11 @@ import {
   FileText,
   Users,
   LogOut,
-  Eye,
   Trash2,
   Download,
   Calendar,
   CheckCircle,
   XCircle,
-  Clock,
-  Plus,
   RefreshCw
 } from 'lucide-react';
 
