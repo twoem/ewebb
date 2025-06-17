@@ -1,0 +1,16 @@
+# render.yaml
+services:
+  - type: web_service
+    name: ewebb-cyber-cafe
+    env: node
+    plan: free
+    branch: main
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: SESSION_SECRET
+        fromSecret: SESSION_SECRET   # set secret in Render Dashboard
+      - key: DEFAULT_ADMIN_PASSWORD
+        fromSecret: DEFAULT_ADMIN_PASSWORD
+      - key: NODE_ENV
+        value: production
