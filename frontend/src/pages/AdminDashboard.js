@@ -173,7 +173,7 @@ const AdminDashboard = () => {
   };
 
   const tabs = [
-    { id: 'overview', label: 'Overview', icon: <Dashboard className="w-5 h-5" /> },
+    { id: 'overview', label: 'Overview', icon: <LayoutDashboard className="w-5 h-5" /> },
     { id: 'contacts', label: 'Contact Messages', icon: <MessageSquare className="w-5 h-5" /> },
     { id: 'documents', label: 'Document Management', icon: <FileText className="w-5 h-5" /> },
     { id: 'upload', label: 'Upload Documents', icon: <Upload className="w-5 h-5" /> }
