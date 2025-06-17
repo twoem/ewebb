@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EWEBB | Admin Dashboard</title>
+  <link rel="icon" href="/images/icon.png">
+  <link rel="stylesheet" href="/styles/style.css">
+  <style>
+    body { font-family: Arial, sans-serif; background: #f7fafc; padding: 1rem; }
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+    header h1 { font-size: 1.5rem; }
+    .logout-btn { background: #ef4444; color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; text-decoration: none; }
+    .upload-form { background: white; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+    .upload-form input, .upload-form select { margin-bottom: 0.5rem; padding: 0.5rem; width: 100%; }
+    .upload-form button { background: #1e40af; color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; }
+    .message { padding: 0.5rem; margin-bottom: 1rem; border-radius: 4px; }
+    .message.success { background: #d1fae5; color: #065f46; }
+    .message.error { background: #fee2e2; color: #991b1b; }
+    table { width: 100%; border-collapse: collapse; background: white; }
+    th, td { border: 1px solid #cbd5e1; padding: 0.75rem; text-align: left; }
+    th { background: #e2e8f0; }
+    .delete-btn { background: #dc2626; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Admin Dashboard</h1>
+    <a href="/admin/logout" class="logout-btn">Logout</a>
+  </header>
+
+  <% if (error) { %>
+    <div class="message error"><%= error %></div>
+  <% } %>
+  <% if (success) { %>
+    <div class="message success"><%= success %></div>
+  <% } %>
+
+  <section class="upload-form">
+    <h2>Upload Document</h2>
+    <form method="POST" action="/admin/upload" enctype="multipart/form-data">
+      <label>Select file (max 10 MB):</label>
+      <input type="file" name="document" required>
+      <label>Category:</label>
+      <select name="category" required>
+        <option value="Public">Public</option>
+        <option value="Eulogy">Eulogy</option>
+      </select>
+      <button type="submit">Upload</button>
+    </form>
+  </section>
+
+  <section>
+    <h2>Uploaded Documents</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Original Name</th>
+          <th>Category</th>
+          <th>Upload Date</th>
+          <th>Expiry Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% uploads.forEach(item => { %>
+        <tr>
+          <td><%= item.originalName %></td>
+          <td><%= item.category %></td>
+          <td><%= new Date(item.uploadDate).toLocaleString() %></td>
+          <td><%= item.expiryDate ? new Date(item.expiryDate).toLocaleString() : '—' %></td>
+          <td>
+            <form method="POST" action="/admin/delete" style="display:inline">
+              <input type="hidden" name="id" value="<%= item.id %>">
+              <button type="submit" class="delete-btn" onclick="return confirm('Delete this file?')">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+      </tbody>
+    </table>
+  </section>
+</body>
+</html>
