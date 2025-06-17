@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EWEBB | Downloads</title>
+  <link rel="icon" href="images/icon.png">
+  <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+  <div id="splash-screen">
+    <div class="splash-content">
+      Welcome to Ewebb Services
+    </div>
+  </div>
+  <div id="main-content" class="hidden">
+    <nav class="navbar">
+      <div class="logo">
+        <img src="images/Ewebb.png" alt="Ewebb Logo" class="logo-img">
+        <span>EWEBB Cyber Café</span>
+      </div>
+      <div class="hamburger" id="hamburger">&#9776;</div>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="downloads.html" class="active">Downloads</a></li>
+        <li><a href="data-protection.html">Data Protection</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </nav>
+    <main class="container">
+      <h1>Downloads</h1>
+      <p>Below are publicly available documents. (Eulogy items are not publicly listed and expire automatically.)</p>
+      <ul id="downloads-list" class="download-list">
+        <!-- JS populates via /api/public-docs -->
+      </ul>
+      <section id="contact">
+        <h2>Contact Us</h2>
+        <p>Email: <a href="mailto:ewebbcybercafe@gmail.com" class="quick-link">ewebbcybercafe@gmail.com</a></p>
+        <p>Phone: <a href="tel:+254700644973" class="quick-link">+254 700 644 973</a></p>
+        <p>Location: Kagwe Town, Blessed Mall Building, Ground Floor</p>
+      </section>
+    </main>
+  </div>
+  <script src="scripts/script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('/api/public-docs')
+        .then(res => res.json())
+        .then(data => {
+          const list = document.getElementById('downloads-list');
+          if (data.length === 0) {
+            list.innerHTML = '<li>No documents available at the moment.</li>';
+          } else {
+            data.forEach(item => {
+              const li = document.createElement('li');
+              const a = document.createElement('a');
+              a.href = item.url;
+              a.textContent = item.originalName;
+              a.target = '_blank';
+              li.appendChild(a);
+              const meta = document.createElement('small');
+              const date = new Date(item.uploadDate).toLocaleDateString();
+              meta.textContent = ` (Uploaded: ${date})`;
+              li.appendChild(meta);
+              list.appendChild(li);
+            });
+          }
+        })
+        .catch(err => {
+          console.error('Error fetching downloads:', err);
+          document.getElementById('downloads-list').innerHTML = '<li>Error loading documents.</li>';
+        });
+    });
+  </script>
+</body>
+</html>
