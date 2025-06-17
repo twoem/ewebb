@@ -1,0 +1,4 @@
+node_modules/
+.env               # local environment file
+uploads/           # uploaded files
+data/password.json # hashed admin password after change
