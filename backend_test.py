@@ -213,8 +213,19 @@ class EwebbAPITester:
         print("="*50)
 
 def main():
-    # Get the backend URL from the environment variable
+    # Get the backend URL from the frontend .env file
     backend_url = "http://localhost:8001"
+    
+    # Read the REACT_APP_BACKEND_URL from the frontend .env file
+    try:
+        with open('/app/frontend/.env', 'r') as f:
+            for line in f:
+                if line.startswith('REACT_APP_BACKEND_URL='):
+                    backend_url = line.strip().split('=')[1]
+                    break
+    except Exception as e:
+        print(f"Warning: Could not read backend URL from .env file: {e}")
+        print(f"Using default backend URL: {backend_url}")
     
     print(f"🚀 Starting EWEBB API tests against {backend_url}")
     tester = EwebbAPITester(backend_url)
