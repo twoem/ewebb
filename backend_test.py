@@ -231,7 +231,11 @@ def main():
     tester = EwebbAPITester(backend_url)
     
     # Test health check
-    tester.test_health_check()
+    health_check_success = tester.test_health_check()
+    if not health_check_success:
+        print("❌ Health check failed - backend may not be running")
+        tester.print_summary()
+        return 1
     
     # Test contact form submission
     tester.test_contact_submission(
@@ -242,13 +246,17 @@ def main():
         message="This is a test message to verify the contact form works properly"
     )
     
-    # Test admin login
+    # Test admin login with correct credentials
+    print("\n🔐 Testing admin login with correct credentials...")
     admin_login_success = tester.test_admin_login("Babuu", "Pass@2025")
     
     # If login successful, test authenticated endpoints
     if admin_login_success:
+        print("✅ Admin login successful with credentials: Babuu/Pass@2025")
         tester.test_get_contacts()
         tester.test_get_admin_documents()
+    else:
+        print("❌ Admin login failed with credentials: Babuu/Pass@2025")
     
     # Test public endpoints
     tester.test_get_documents()
