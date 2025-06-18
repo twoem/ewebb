@@ -410,7 +410,7 @@ const AdminDashboard = () => {
                         <div className="flex space-x-2">
                           <button
                             onClick={() => {
-                              const backendUrl = process.env.REACT_APP_BACKEND_URL;
+                              const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
                               window.open(`${backendUrl}/uploads/${document.category}/${document.filename}`, '_blank');
                             }}
                             className="flex-1 btn-primary flex items-center justify-center text-sm py-2"
