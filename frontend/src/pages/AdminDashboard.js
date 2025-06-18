@@ -30,19 +30,6 @@ const AdminDashboard = () => {
   });
   const navigate = useNavigate();
 
-  useEffect(() => {
-    document.title = 'Ewebb | Admin Dashboard';
-    
-    // Check authentication
-    const token = localStorage.getItem('adminToken');
-    if (!token) {
-      navigate('/admin');
-      return;
-    }
-
-    fetchData();
-  }, [fetchData]);
-
   const fetchData = useCallback(async () => {
     try {
       const token = localStorage.getItem('adminToken');
@@ -71,7 +58,20 @@ const AdminDashboard = () => {
     } finally {
       setLoading(false);
     }
-  }, [navigate]);
+  }, [navigate]); // Fixed: Only include navigate as dependency
+
+  useEffect(() => {
+    document.title = 'Ewebb | Admin Dashboard';
+    
+    // Check authentication
+    const token = localStorage.getItem('adminToken');
+    if (!token) {
+      navigate('/admin');
+      return;
+    }
+
+    fetchData();
+  }, [navigate, fetchData]); // Fixed: Include both dependencies
 
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
