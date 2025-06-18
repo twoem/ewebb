@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Twoem Cyber Café Website Specification</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom scrollbar styling for better UX */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #3b82f6;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #2563eb;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 leading-relaxed">
+
+  <!-- Header -->
+  <header class="bg-white shadow sticky top-0 z-10">
+    <div class="container mx-auto flex items-center justify-between py-4 px-6">
+      <div class="flex items-center">
+        <img src="/images/twoem.png" alt="Twoem Logo" class="h-10 w-auto mr-3"/>
+        <span class="text-2xl font-bold text-blue-600">Twoem Cyber Café Specification</span>
+      </div>
+      <nav class="hidden md:flex space-x-4">
+        <a href="#overview" class="hover:text-blue-700">Overview</a>
+        <a href="#public-pages" class="hover:text-blue-700">Public Pages</a>
+        <a href="#login-portals" class="hover:text-blue-700">Login Portals</a>
+        <a href="#student-portal" class="hover:text-blue-700">Student Portal</a>
+        <a href="#contact-email" class="hover:text-blue-700">Contact & Email</a>
+        <a href="#file-storage" class="hover:text-blue-700">File & Storage</a>
+        <a href="#database-schema" class="hover:text-blue-700">DB Schema</a>
+        <a href="#env-vars" class="hover:text-blue-700">Env Vars</a>
+        <a href="#implementation" class="hover:text-blue-700">Implementation</a>
+        <a href="#ux-ui" class="hover:text-blue-700">UX/UI</a>
+        <a href="#deployment" class="hover:text-blue-700">Deployment</a>
+        <a href="#security" class="hover:text-blue-700">Security</a>
+        <a href="#analytics" class="hover:text-blue-700">Analytics</a>
+        <a href="#future" class="hover:text-blue-700">Future</a>
+      </nav>
+      <button id="nav-toggle" class="md:hidden focus:outline-none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+    <div id="mobile-nav" class="hidden bg-white border-t">
+      <div class="flex flex-col py-2 px-6 space-y-2">
+        <a href="#overview" class="block hover:text-blue-700">Overview</a>
+        <a href="#public-pages" class="block hover:text-blue-700">Public Pages</a>
+        <a href="#login-portals" class="block hover:text-blue-700">Login Portals</a>
+        <a href="#student-portal" class="block hover:text-blue-700">Student Portal</a>
+        <a href="#contact-email" class="block hover:text-blue-700">Contact & Email</a>
+        <a href="#file-storage" class="block hover:text-blue-700">File & Storage</a>
+        <a href="#database-schema" class="block hover:text-blue-700">DB Schema</a>
+        <a href="#env-vars" class="block hover:text-blue-700">Env Vars</a>
+        <a href="#implementation" class="block hover:text-blue-700">Implementation</a>
+        <a href="#ux-ui" class="block hover:text-blue-700">UX/UI</a>
+        <a href="#deployment" class="block hover:text-blue-700">Deployment</a>
+        <a href="#security" class="block hover:text-blue-700">Security</a>
+        <a href="#analytics" class="block hover:text-blue-700">Analytics</a>
+        <a href="#future" class="block hover:text-blue-700">Future</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-6 py-8 space-y-12">
+
+    <!-- 1. Overview -->
+    <section id="overview">
+      <h2 class="text-3xl font-bold text-blue-600 mb-4">1. Overview</h2>
+      <p class="mb-4">
+        Twoem Cyber Café’s website is a modern, responsive, multi-functional platform serving both walk-in customers and enrolled computer students. It integrates:
+      </p>
+      <ul class="list-disc list-inside mb-4 space-y-2">
+        <li>Public marketing pages (Home, Gallery, Services, Downloads, Data Protection, Contact)</li>
+        <li>Two secure login portals: Admin Portal and Student Portal</li>
+        <li>Backend features: student management, fees, academics, resources, notifications, backups, analytics, audit logs</li>
+        <li>Email integration (contact form, password resets, notifications, receipts) using <strong>twoem.website@gmail.com</strong>, with replies routed to <strong>twoemcyber@gmail.com</strong></li>
+        <li>File handling (uploads/downloads with expiry logic)</li>
+        <li>Strong security and data protection compliance (Kenya Data Protection Act 2019)</li>
+        <li>Future-proof extensibility (roles, analytics, mobile/PWA, payment integration)</li>
+      </ul>
+      <p>All pages share a consistent header/footer, “Twoem | PageName” title convention, responsive design with hamburger menu on mobile, utilizing Tailwind CSS for a clean aesthetic.</p>
+    </section>
+
+    <!-- 2. Public-Facing Pages -->
+    <section id="public-pages">
+      <h2 class="text-3xl font-bold text-blue-600 mb-4">2. Public-Facing Pages</h2>
+
+      <!-- Common Layout & Assets -->
+      <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">2.1. Common Layout & Assets</h3>
+        <ul class="list-disc list-inside mb-4 space-y-2">
+          <li><strong>Header</strong>: Logo, site title “Twoem Cyber Café”, navigation links: Home, Gallery, Services, Downloads, Data Protection, Contact, Login.</li>
+          <li><strong>Footer</strong>: Quick links in blue; address; primary contact email <code>twoemcyber@gmail.com</code> and phone +254 707 330 204.</li>
+          <li><strong>Styling</strong>: Tailwind CSS (via CDN or compiled); responsive, mobile-first.</li>
+          <li><strong>Images Folder</strong> (<code>/public/images/</code>):</li>
+          <ul class="list-disc list-inside ml-6 mb-2 space-y-1">
+            <li><code>icon.png</code> – Favicon</li>
+            <li><code>twoem.png</code> (or <code>Ewebb.png</code>) – Logo</li>
+            <li><code>Photo1.jpg</code>, <code>Photo2.jpg</code>, <code>Photo3.jpg</code> – Gallery images</li>
+            <li><code>ecitizen1.jpeg</code>, <code>ecitizen2.jpeg</code>, <code>ecitizen3.jpeg</code> – eCitizen visuals</li>
+            <li><code>itax.jpeg</code> – iTax Services</li>
+            <li><code>Services.jpeg</code> – Office/Digital services</li>
+            <li><code>Browsing.jpeg</code> – Internet services</li>
+            <li><code>digitalprint.jpeg</code> – Print Design services</li>
+          </ul>
+          <li><strong>Static File Serving</strong>: <code>app.use(express.static(path.join(__dirname, 'public')));</code> Reference images with absolute paths, e.g., <code>&lt;img src="/images/Photo1.jpg" alt="..."&gt;</code>.</li>
+        </ul>
+      </div>
+
+      <!-- Home -->
+      <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">2.2. Home (<em>Twoem | Home</em>)</h3>
+        <ul class="list-disc list-inside mb-4 space-y-2">
+          <li><strong>URL:</strong> <code>/</code></li>
+          <li><strong>Title:</strong> <code>Twoem | Home</code></li>
+          <li><strong>Sections:</strong>
+            <ul class="list-disc list-inside ml-6 mb-2 space-y-1">
+              <li><strong>Welcome Banner</strong>: Headline “Your One-Stop Digital Gateway” and intro text:
+                <blockquote class="border-l-4 border-blue-500 pl-4 italic">
+                  “Welcome to Twoem Cyber Café – your one-stop center for eCitizen services, digital printing, internet access, computer training, and more. We handle paperwork, printing, and digital tasks so you can focus on what matters.”
+                </blockquote>
+              </li>
+              <li><strong>Services Overview Teaser</strong>: Cards linking to Services page.</li>
+              <li><strong>Gallery Preview</strong>: Responsive grid showing:
+                <ul class="list-disc list-inside ml-6 space-y-1">
+                  <li><code>/images/Photo1.jpg</code> – Photocopy in Process</li>
+                  <li><code>/images/Photo2.jpg</code> – eCitizen Services</li>
+                  <li><code>/images/Photo3.jpg</code> – Welcome</li>
+                </ul>
+              </li>
+              <li><strong>Quick Links / Cards</strong>: Buttons linking to Services, Downloads, Admin Login, Student Login, Contact.</li>
+              <li><strong>Location Info</strong>: “Kagwe Town, Plaza Building, First Floor, Opposite Total Petrol Station” and optionally embedded Google Map.</li>
+              <li><strong>Footer</strong>: as per common layout.</li>
+            </ul>
+          </li>
+          <li><strong>Optional Splash Screen</strong>: On first load, show “Welcome to Twoem Services” for 3–6 seconds before main content.</li>
+        </ul>
+      </div>
+
+      <!-- Gallery -->
+      <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">2.3. Gallery (<em>Twoem | Gallery</em>)</h3>
+        <ul class="list-disc list-inside space-y-2">
+          <li><strong>URL:</strong> <code>/gallery</code></li>
+          <li><strong>Title:</strong> <code>Twoem | Gallery</code></li>
+          <li><strong>Content:</strong> Responsive grid of three images with captions; optional lightbox/enlarge; footer with Contact anchor.</li>
+        </ul>
+      </div>
+
+      <!-- Services -->
+      <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">2.4. Services (<em>Twoem | Services</em>)</h3>
+        <p class="mb-2"><strong>URL:</strong> <code>/services</code> | <strong>Title:</strong> <code>Twoem | Services</code></p>
+        <div class="space-y-6">
+          <!-- A. Digital Printing & Design -->
+          <div class="bg-white rounded-lg shadow p-6">
+            <h4 class="text-xl font-semibold text-blue-600 mb-2">A. Digital Printing &amp; Design</h4>
+            <img src="/images/digitalprint.jpeg" alt="Digital Printing" class="w-full h-48 object-cover rounded mb-4"/>
+            <ul class="list-disc list-inside space-y-1 mb-4">
+              <li>Business Cards</li>
+              <li>Award Certificates</li>
+              <li>Brochures</li>
+              <li>Funeral Programs</li>
+              <li>Handouts</li>
+              <li>Flyers</li>
+              <li>Maps</li>
+              <li>Posters</li>
+              <li>Letterheads</li>
+              <li>Calendars</li>
+            </ul>
+            <a href="https://wa.me/254707330204?text=I%20need%20Digital%20Printing%20Services" target="_blank"
+               class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Get Service</a>
+          </div>
+          <!-- B. Government & Official Services -->
+          <div class="bg-white rounded-lg shadow p-6">
+            <h4 class="text-xl font-semibold text-blue-600 mb-2">B. Government &amp; Official Services</h4>
+            <!-- eCitizen -->
+            <div class="mb-4">
+              <h5 class="text-lg font-medium text-gray-800 mb-1">🛂 eCitizen Services</h5>
+              <img src="/images/ecitizen1.jpeg" alt="eCitizen Services" class="w-full h-40 object-cover rounded mb-2"/>
+              <ul class="list-disc list-inside space-y-1 mb-2">
+                <li>Passport Application &amp; Renewal</li>
+                <li>Certificate of Good Conduct (DCI)</li>
+                <li>Birth &amp; Death Certificate Applications</li>
+                <li>Marriage Registration &amp; Licensing</li>
+                <li>CRB Clearance Certificate</li>
+                <li>HELB Loan Application &amp; Clearance</li>
+                <li>TSC Number Application &amp; GHRIS Payslip Access</li>
+                <li>NHIF &amp; NSSF Registration</li>
+                <li>Business Name / Company Registration</li>
+                <li>Land Rent Clearance &amp; Official Land Search</li>
+                <li>Driving License Renewal &amp; NTSA Bookings</li>
+                <li>Logbook Transfers</li>
+              </ul>
+              <a href="https://wa.me/254707330204?text=I%20need%20eCitizen%20Services" target="_blank"
+                 class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Get Service</a>
+            </div>
+            <!-- iTax -->
+            <div class="mb-4">
+              <h5 class="text-lg font-medium text-gray-800 mb-1">💻 iTax (KRA) Services</h5>
+              <img src="/images/itax.jpeg" alt="iTax Services" class="w-full h-40 object-cover rounded mb-2"/>
+              <ul class="list-disc list-inside space-y-1 mb-2">
+                <li>New KRA PIN Registration</li>
+                <li>Group PIN Registration</li>
+                <li>Tax Returns Filing (Annual &amp; Nil)</li>
+                <li>Compliance Certificate Application</li>
+                <li>PIN Retrieval &amp; Update</li>
+                <li>Certificate Reprinting</li>
+                <li>iTax Account Assistance &amp; Recovery</li>
+              </ul>
+              <a href="https://wa.me/254707330204?text=I%20need%20iTax%20Services" target="_blank"
+                 class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Get Service</a>
+            </div>
+            <!-- Office & Digital -->
+            <div class="mb-4">
+              <h5 class="text-lg font-medium text-gray-800 mb-1">🖨️ Office &amp; Digital Services</h5>
+              <img src="/images/Services.jpeg" alt="Office & Digital Services" class="w-full h-40 object-cover rounded mb-2"/>
+              <ul class="list-disc list-inside space-y-1 mb-2">
+                <li>Photocopying</li>
+                <li>Printing (Black &amp; White / Colour)</li>
+                <li>Document Typing &amp; Editing</li>
+                <li>Scanning (Document &amp; Photo)</li>
+                <li>Binding &amp; Lamination</li>
+                <li>Instant Passport Photos</li>
+              </ul>
+              <a href="https://wa.me/254707330204?text=I%20need%20Office%20Services" target="_blank"
+                 class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Get Service</a>
+            </div>
+            <!-- Internet -->
+            <div>
+              <h5 class="text-lg font-medium text-gray-800 mb-1">🌐 Internet Services</h5>
+              <img src="/images/Browsing.jpeg" alt="Internet Services" class="w-full h-40 object-cover rounded mb-2"/>
+              <ul class="list-disc list-inside space-y-1 mb-2">
+                <li>High-Speed Browsing (e.g., 1/- per minute)</li>
+                <li>Online Form Submission &amp; Email Setup</li>
+                <li>Account Creation (Email, Social, Government)</li>
+                <li>Online Application Support</li>
+              </ul>
+              <a href="https://wa.me/254707330204?text=I%20need%20Internet%20Services" target="_blank"
+                 class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Get Service</a>
+            </div>
+          </div>
+          <!-- C. Other Computer & Support Services -->
+          <div class="bg-white rounded-lg shadow p-6">
+            <h4 class="text-xl font-semibold text-blue-600 mb-2">C. Other Computer &amp; Support Services</h4>
+            <ul class="list-disc list-inside space-y-1 mb-4">
+              <li>Computer Students Online Portal (Student Portal)</li>
+              <li>Design &amp; Layout</li>
+              <li>Map &amp; Poster Design</li>
+              <li>Award Certificate Design</li>
+              <li>Business Card Layout</li>
+            </ul>
+            <!-- Example generic Get Service link -->
+            <a href="https://wa.me/254707330204?text=I%20need%20Support%20Services" target="_blank"
+               class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Get Service</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Downloads -->
+      <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">2.5. Downloads (<em>Twoem | Downloads</em>)</h3>
+        <ul class="list-disc list-inside mb-2 space-y-2">
+          <li><strong>URL:</strong> <code>/downloads</code> | <strong>Title:</strong> <code>Twoem | Downloads</code></li>
+          <li><strong>Content:</strong>
+            <ul class="list-disc list-inside ml-6 space-y-1">
+              <li><strong>Public Documents</strong>: Admin-uploaded; permanently available; display filename &amp; upload date; search/filter; download links (<code>/uploads/public/...</code>).</li>
+              <li><strong>Eulogy Documents</strong>: Admin-uploaded with 7-day auto-expiry; display filename, upload &amp; expiry date; hide/mark expired.</li>
+              <li><strong>UI</strong>: Search input to filter; styled list/table via Tailwind.</li>
+              <li><strong>Backend</strong>: API endpoints or server-rendered templates supply current lists.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Data Protection -->
+      <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">2.6. Data Protection (<em>Twoem | Data Protection</em>)</h3>
+        <ul class="list-disc list-inside mb-4 space-y-2">
+          <li><strong>URL:</strong> <code>/data-protection</code> | <strong>Title:</strong> <code>Twoem | Data Protection</code></li>
+          <li><strong>Content:</strong>
+            <ul class="list-disc list-inside ml-6 space-y-2">
+              <li><strong>Commitment to Privacy</strong>: “At Twoem Cyber Café, we value your privacy. We comply with Kenya’s Data Protection Act, 2019…”</li>
+              <li><strong>Principles</strong>: Lawful &amp; Fair Processing; Data Minimization; Purpose Limitation; Accuracy &amp; Integrity; Limited Retention; Security &amp; Confidentiality.</li>
+              <li><strong>Data Handling Table</strong>:
+                <div class="overflow-x-auto mt-2">
+                  <table class="min-w-full bg-white border rounded-lg">
+                    <thead>
+                      <tr class="bg-blue-100">
+                        <th class="px-4 py-2 text-left">Type of Data</th>
+                        <th class="px-4 py-2 text-left">Purpose</th>
+                        <th class="px-4 py-2 text-left">Retention</th>
+                        <th class="px-4 py-2 text-left">Security Measures</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="border-t">
+                        <td class="px-4 py-2">ID / Certificates</td>
+                        <td class="px-4 py-2">eCitizen, KRA, Exams assistance</td>
+                        <td class="px-4 py-2">Deleted immediately</td>
+                        <td class="px-4 py-2">Not stored externally</td>
+                      </tr>
+                      <tr class="border-t bg-gray-50">
+                        <td class="px-4 py-2">Contact Info (Name, Email, Phone)</td>
+                        <td class="px-4 py-2">Notifications, Receipts</td>
+                        <td class="px-4 py-2">Max 30 days</td>
+                        <td class="px-4 py-2">Encrypted, access-controlled</td>
+                      </tr>
+                      <tr class="border-t">
+                        <td class="px-4 py-2">Financial Info (Fees)</td>
+                        <td class="px-4 py-2">Fees tracking &amp; receipts</td>
+                        <td class="px-4 py-2">Until payment done</td>
+                        <td class="px-4 py-2">Stored in DB, encrypted</td>
+                      </tr>
+                      <tr class="border-t bg-gray-50">
+                        <td class="px-4 py-2">Academic Data (Grades)</td>
+                        <td class="px-4 py-2">Student progress &amp; eligibility</td>
+                        <td class="px-4 py-2">Course duration</td>
+                        <td class="px-4 py-2">Access-controlled, encrypted</td>
+                      </tr>
+                      <tr class="border-t">
+                        <td class="px-4 py-2">Uploaded Docs (Resources/Eulogies)</td>
+                        <td class="px-4 py-2">Downloads by authorized users</td>
+                        <td class="px-4 py-2">Until expiry or manual delete</td>
+                        <td class="px-4 py-2">Protected storage, auto-expiry logic</td>
+                      </tr>
+                      <tr class="border-t bg-gray-50">
+                        <td class="px-4 py-2">Email Reset Tokens</td>
+                        <td class="px-4 py-2">Password reset process</td>
+                        <td class="px-4 py-2">Token validity (e.g., 1 hour)</td>
+                        <td class="px-4 py-2">Stored hashed, one-time use</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </li>
+              <li><strong>Customer Rules</strong>: Provide authentic documents; consent required; logout from public computers; respect others; no loud conversations; equipment care.</li>
+              <li><strong>User Rights under Kenya DPA, 2019</strong>: Access, correct, delete data; withdraw consent; report misuse to <a href="https://www.odpc.go.ke" class="text-blue-600 hover:underline">Office of Data Protection Commissioner</a>.</li>
+              <li><strong>Contact for Data Queries</strong>:
+                <ul class="list-disc list-inside ml-6 space-y-1">
+                  <li>Email: <code>twoemcyber@gmail.com</code></li>
+                  <li>Phone: +254 707 330 204</li>
+                  <li>Location: Kagwe Town, Plaza Building, First Floor, Opposite Total Petrol Station</li>
+                </ul>
+              </li>
+              <li><strong>Cookie &amp; Analytics Notice</strong>: If analytics added, inform users; minimal cookies for session only.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">2.7. Contact (<em>Twoem | Contact</em>)</h3>
+        <ul class="list-disc list-inside space-y-2">
+          <li><strong>URL:</strong> Section anchor <code>#contact</code> and/or <code>/contact</code> | <strong>Title:</strong> <code>Twoem | Contact</code></li>
+          <li><strong>Contact Form</strong>:
+            <ul class="list-disc list-inside ml-6 space-y-1">
+              <li><strong>Fields</strong>: Name, Email, Subject (optional), Message.</li>
+              <li><strong>Spam Protection</strong>: reCAPTCHA or honeypot.</li>
+              <li><strong>Form action</strong>: POST <code>/contact</code>.</li>
+              <li><strong>Email Sending</strong>:
+                <ul class="list-disc list-inside ml-6 space-y-1">
+                  <li><strong>Sender:</strong> <code>twoem.website@gmail.com</code> (App Password or OAuth2 configured).</li>
+                  <li><strong>Recipient:</strong> <code>twoemcyber@gmail.com</code>.</li>
+                  <li><strong>Headers</strong>:
+                    <pre class="bg-gray-100 p-2 rounded"><code>from: "No Reply" &lt;twoem.website@gmail.com&gt;,
+to: "twoemcyber@gmail.com",
+replyTo: "twoemcyber@gmail.com",
+subject: `Contact Form Submission from ${'{name}'}`, ...</code></pre>
+                  </li>
+                </ul>
+              </li>
+              <li><strong>Response</strong>: Render thank-you or error feedback to user.</li>
+              <li><strong>Additional Info</strong>: Address text/map, support phone +254 707 330 204, working hours.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3. Login Portals -->
+    <section id="login-portals">
+      <h2 class="text-3xl font-bold text-blue-600 mb-4">3. Login Portals</h2>
+
+      <!-- Admin Portal -->
+      <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">3.1. Admin Portal (<em>Twoem | Admin</em>)</h3>
+        <ul class="list-disc list-inside mb-4 space-y-2">
+          <li><strong>URL:</strong> <code>/admin/login</code> | Dashboard under <code>/admin/...</code></li>
+          <li><strong>Title:</strong> <code>Twoem | Admin Login</code> and <code>Twoem | Admin Dashboard</code></li>
+          <li><strong>Credentials</strong>:
+            <ul class="list-disc list-inside ml-6 space-y-1">
+              <li>Username from environment: <code>ADMIN_USERNAME=admin</code></li>
+              <li>Password bcrypt hash in environment: <code>ADMIN_PASSWORD_HASH=&lt;bcrypt-hash&gt;</code></li>
+              <li><strong>No Forced Reset</strong>: Admin password managed solely via environment variable updates. To rotate: generate new bcrypt hash and update <code>ADMIN_PASSWORD_HASH</code>, restart app.</li>
+            </ul>
+          </li>
+          <li><strong>Session &amp; Security</strong>:
+            <ul class="list-disc list-inside ml-6 space-y-1">
+              <li>Use <code>express-session</code> with <code>SESSION_SECRET</code> from env; secure, HttpOnly cookies.</li>
+              <li>Rate-limiting on login endpoint.</li>
+              <li>Optionally IP restrictions or 2FA in future.</li>
+            </ul>
+          </li>
+          <li><strong>Login Flow</strong>:
+            <ol class="list-decimal list-inside ml-6 space-y-1">
+              <li>Render login form for username &amp; password.</li>
+              <li>Compare entered values vs environment variables using bcrypt.</li>
+              <li>On success: <code>req.session.isAdmin = true</code>; redirect to <code>/admin/dashboard</code>.</li>
+              <li>On failure: re-render with “Invalid credentials”.</li>
+            </ol>
+          </li>
+          <li><strong>Middleware</strong>: <code>ensureAdmin</code> protects all admin routes except login.</li>
+          <li><strong>Dashboard</strong>: Navigation to modules; include “Settings” note: “Admin password managed externally via environment variable.”</li>
+        </ul>
+
+        <!-- Admin Modules -->
+        <div class="space-y-6">
+          <!-- Student Management -->
+          <div>
+            <h4 class="text-xl font-semibold text-blue-600 mb-2">3.1.1. Student Management</h4>
+            <ul class="list-disc list-inside space-y-2 ml-6">
+              <li><strong>Register Student</strong>:
+                <ul class="list-disc list-inside ml-6 space-y-1">
+                  <li>Inputs: Reg Number (unique), Full Name, Email, Enrollment Date, Default Password <code>Portal@2025</code>.</li>
+                  <li>After creation: send welcome email via <code>twoem.website@gmail.com</code>:
+                    <pre class="bg-gray-100 p-2 rounded"><code>from: "No Reply" &lt;twoem.website@gmail.com&gt;,
+to: student.email,
+replyTo: "twoemcyber@gmail.com",
+subject: "Welcome to Twoem Student Portal",
+text: `Hello ${'{student.fullName}'}, Your login: Reg Number ${'{student.regNumber}'}, Default password: Portal@2025. Please login and change password immediately.`</code></pre>
+                  </li>
+                </ul>
+              </li>
+              <li><strong>Edit Student</strong>: Update details; optionally email changes.</li>
+              <li><strong>Deregister Student</strong>: Confirm via modal; deactivate/archive record.</li>
+              <li><strong>Reset Student Password</strong>: Reset to <code>Portal@2025</code>, set <code>mustResetPassword=true</code>; email via <code>twoem.website@gmail.com</code> with replyTo <code>twoemcyber@gmail.com</code>.</li>
+              <li><strong>Notifications</strong>: Send individual messages; store in DB; email notification from <code>twoem.website@gmail.com</code> with replyTo <code>twoemcyber@gmail.com</code>.</li>
+            </ul>
+          </div>
+
+          <!-- Fees Management -->
+          <div>
+            <h4 class="text-xl font-semibold text-blue-600 mb-2">3.1.2. Fees Management</h4>
+            <ul class="list-disc list-inside space-y-2 ml-6">
+              <li><strong>View All Students</strong>: Table with Reg Number, Name, Total Due, Total Paid, Balance; search/filter.</li>
+              <li><strong>Update Payment</strong>:
+                <ul class="list-disc list-inside ml-6 space-y-1">
+                  <li>Inputs: Amount, Date, Reference No.; append to Fees collection; recalc balance.</li>
+                  <li>Send payment receipt email via <code>twoem.website@gmail.com</code>:
+                    <pre class="bg-gray-100 p-2 rounded"><code>from: "No Reply" &lt;twoem.website@gmail.com&gt;,
+to: student.email,
+replyTo: "twoemcyber@gmail.com",
+subject: "Payment Received – Twoem Cyber Café",
+text: `Dear ${'{student.fullName}'}, We have received your payment of ${'{amount}'} on ${'{date}'}. Updated balance: ${'{balance}'}. Thank you.`</code></pre>
+                  </li>
+                </ul>
+              </li>
+              <li><strong>Pending Balances</strong>: Highlight students; send reminder emails from <code>twoem.website@gmail.com</code>.</li>
+              <li><strong>Analytics</strong>: Total collected, outstanding, trends; charts in Admin Analytics.</li>
+            </ul>
+          </div>
+
+          <!-- Academics -->
+          <div>
+            <h4 class="text-xl font-semibold text-blue-600 mb-2">3.1.3. Academics</h4>
+            <ul class="list-disc list-inside space-y-2 ml-6">
+              <li><strong>Course Units (30%)</strong>: 8 units (Introduction to Computers; Keyboard Management; MS Word; MS Excel; MS Publisher; MS PowerPoint; MS Access; Internet &amp; Email). Admin enters marks 0–100.</li>
+              <li><strong>Main Exam (70%)</strong>: Theory (35%) &amp; Practical (35%). Admin enters marks 0–100.</li>
+              <li><strong>Final Score Calculation</strong>: <code>0.3 * avg(unitMarks) + 0.7 * avg(examMarks)</code> out of 100.</li>
+              <li><strong>Eligibility</strong>: final ≥ 60 AND fees balance = 0.</li>
+              <li><strong>Grade Input UI</strong>: Form per student; validate inputs; store in DB; recalc final score.</li>
+              <li><strong>Post-Result Actions</strong>:
+                <ul class="list-disc list-inside ml-6 space-y-1">
+                  <li>If eligible: admin uploads certificate file; mark available.</li>
+                  <li>Send result notification via <code>twoem.website@gmail.com</code>:
+                    <pre class="bg-gray-100 p-2 rounded"><code>from: "No Reply" &lt;twoem.website@gmail.com&gt;,
+to: student.email,
+replyTo: "twoemcyber@gmail.com",
+subject: "Your Course Results – Twoem Cyber Café",
+text: `Hello ${'{student.fullName}'}, Your final score is ${'{finalScore}'}. ${'{finalScore >= 60 ? "Congratulations! You are eligible for the certificate." : "Your score is below the eligibility threshold."}'}`</code></pre>
+                  </li>
+                </ul>
+              </li>
+              <li><strong>Grade Analytics</strong>: Distributions, pass/fail lists, charts.</li>
+            </ul>
+          </div>
+
+          <!-- Resources Upload -->
+          <div>
+            <h4 class="text-xl font-semibold text-blue-600 mb-2">3.1.4. Resources Upload</h4>
+            <ul class="list-disc list-inside space-y-2 ml-6">
+              <li><strong>Upload Materials</strong>: PDF, DOCX, XLSX, PPTX, JPG, PNG; max 3MB. Metadata: description, targetCourse, expiryDate. Store file &amp; metadata in DB/persistent storage.</li>
+              <li><strong>Notifications</strong>: Notify relevant students via email from <code>twoem.website@gmail.com</code> with replyTo <code>twoemcyber@gmail.com</code> or in-app notification.</li>
+              <li><strong>Manage Resources</strong>: Edit metadata, delete, handle expiry (auto-hide/delete).</li>
+              <li><strong>Student Portal</strong>: List active resources for student’s enrolled courses; download via authenticated route.</li>
+            </ul>
+          </div>
+
+          <!-- WiFi Credentials -->
+          <div>
+            <h4 class="text-xl font-semibold text-blue-600 mb-2">3.1.5. WiFi Credentials Section</h4>
+            <ul class="list-disc list-inside space-y-2 ml-6">
+              <li><strong>Fields</strong>: SSID, Password, Instructions, Disclaimer.</li>
+              <li><strong>Storage</strong>: Save in DB; display in Student Portal.</li>
+              <li><strong>Update Notifications</strong>: Optionally email students via <code>twoem.website@gmail.com</code> with replyTo <code>twoemcyber@gmail.com</code>.</li>
+            </ul>
+          </div>
+
+          <!-- Notifications Center -->
+          <div>
+            <h4 class="text-xl font-semibold text-blue-600 mb-2">3.1.6. Notifications Center</h4>
+            <ul class="list-disc list-inside space-y-2 ml-6">
+              <li><strong>Global Broadcasts</strong>: Visible to all students; optional email broadcast via <code>twoem.website@gmail.com</code>.</li>
+              <li><strong>Individual Messages</strong>: Send to specific student; in-app and email notification from <code>twoem.website@gmail.com</code>.</li>
+              <li><strong>Storage</strong>: Store notifications in DB with read/unread status.</li>
+              <li><strong>Student Portal</strong>: Inbox shows unread badge.</li>
+            </ul>
+          </div>
+
+          <!-- System Backup / Import -->
+          <div>
+            <h4 class="text-xl font-semibold text-blue-600 mb-2">3.1.7. System Backup / Import</h4>
+            <ul class="list-disc list-inside space-y-2 ml-6">
+              <li><strong>Upload Backups</strong>: Admin uploads `.zip` files (DB dumps/CSV exports); size limit e.g., 50MB; metadata stored in DB.</li>
+              <li><strong>Download Backups</strong>: Admin can download stored backups.</li>
+              <li><strong>Export/Import</strong>: Buttons to export current data (students, fees, academics, etc.) as CSV/JSON; import with validation.</li>
+              <li><strong>Notifications</strong>: Optionally email admin via <code>twoem.website@gmail.com</code> upon successful backup.</li>
+            </ul>
+          </div>
+
+          <!-- Audit Logs -->
+          <div>
+            <h4 class="text-xl font-semibold text-blue-600 mb-2">3.1.8. Audit Logs</h4>
+            <ul class="list-disc list-inside space-y-2 ml-6">
+              <li><strong>Actions Tracked</strong>: Admin login/logout; student reg/dereg; password resets; fee updates; grade entries; resource uploads/edits/deletions; notifications; WiFi changes; backups; analytics exports.</li>
+              <li><strong>Storage</strong>: DB collection/table with fields: actionType, adminUser, targetEntity, details, timestamp, ipAddress.</li>
+              <li><strong>Admin UI</strong>: Filterable logs view.</li>
+            </ul>
+          </div>
+
+          <!-- Analytics Dashboard -->
+          <div>
+            <h4 class="text-xl font-semibold text-blue-600 mb-2">3.1.9. Analytics Dashboard</h4>
+            <ul class="list-disc list-inside space-y-2 ml-6">
+              <li><strong>Student Metrics</strong>: Total enrolled; active vs inactive; completion rates; new registrations trends.</li>
+              <li><strong>Financial Metrics</strong>: Total fees collected; outstanding balances; payment trends.</li>
+              <li><strong>Resource Usage</strong>: Download counts; most accessed; upcoming expiries.</li>
+              <li><strong>Portal Activity</strong>: Login frequency; notification engagement.</li>
+              <li><strong>Visualization</strong>: Use Chart.js for charts; cards for key stats; date-range filters; export CSV/PDF.</li>
+              <li><strong>Optional Email Reports</strong>: Periodic summaries sent to admin from <code>twoem.website@gmail.com</code> with replyTo <code>twoemcyber@gmail.com</code>.</li>
+            </ul>
+          </div>
+
+          <!-- User Roles & Access Control -->
+          <div>
+            <h4 class="text-xl font-semibold text-blue-600 mb-2">3.1.10. User Roles &amp; Access Control (Future-Proofing)</h4>
+            <p class="ml-6 mb-2">Current: Single admin via env-based credentials. Future: Multi-admin accounts with roles (superadmin, finance, academic, support). Code structured to allow switching to DB-based admin authentication later.</p>
+          </div>
+
+          <!-- Dark Mode / Accessibility -->
+          <div>
+            <h4 class="text-xl font-semibold text-blue-600 mb-2">3.1.11. Dark Mode / Accessibility</h4>
+            <ul class="list-disc list-inside space-y-1 ml-6">
+              <li>Toggle in header/settings; persist in localStorage.</li>
+              <li>ARIA labels, keyboard navigation, color contrast, font-size adjustments.</li>
+            </ul>
+          </div>
+
+          <!-- Live Chat Integration -->
+          <div>
+            <h4 class="text-xl font-semibold text-blue-600 mb-2">3.1.12. Live Chat / Chatbot Integration (Optional)</h4>
+            <p class="ml-6">Embed third-party widget for visitor support; ensure no sensitive data exposure; no email config needed for widget itself.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Student Portal -->
+      <div>
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">3.2. Student Portal (<em>Twoem | Student</em>)</h3>
+        <ul class="list-disc list-inside mb-4 space-y-2">
+          <li><strong>URL:</strong> <code>/student/login</code>; dashboard under <code>/student/...</code></li>
+          <li><strong>Title:</strong> <code>Twoem | Student Login</code> and <code>Twoem | Student - SectionName</code></li>
+          <li><strong>Authentication</strong>:
+            <ul class="list-disc list-inside ml-6 space-y-1">
+              <li>Username: Reg Number.</li>
+              <li>Default Password: <code>Portal@2025</code> with forced reset on first login.</li>
+              <li>Password Reset (“Forgot Password”): generate secure token, email via <code>twoem.website@gmail.com</code> with replyTo <code>twoemcyber@gmail.com</code>.</li>
+              <li>Passwords hashed with bcrypt; salt rounds from <code>SALT_ROUNDS</code> env var.</li>
+            </ul>
+          </li>
+          <li><strong>Session</strong>: <code>express-session</code> with secure settings.</li>
+          <li><strong>Portal Sections</strong>:
+            <ul class="list-disc list-inside ml-6 space-y-1">
+              <li><strong>Profile</strong>: view/update email/password.</li>
+              <li><strong>Academics</strong>: view unit &amp; exam marks, final score, eligibility; certificate download if eligible and uploaded, else pending messages.</li>
+              <li><strong>Fees</strong>: payment history table, balance; request receipt resend via email from <code>twoem.website@gmail.com</code>.</li>
+              <li><strong>Resources</strong>: list &amp; download active resources for enrolled courses.</li>
+              <li><strong>Notifications</strong>: inbox of admin messages.</li>
+              <li><strong>WiFi Info</strong>: SSID, password, instructions, disclaimer.</li>
+              <li><strong>Certificate Section</strong>: eligibility status &amp; download if available; else appropriate pending message.</li>
+              <li><strong>Support / Help</strong>: submit support tickets; store in DB; email admin via <code>twoem.website@gmail.com</code> with replyTo <code>twoemcyber@gmail.com</code>; show acknowledgement.</li>
+              <li><strong>Theme &amp; Accessibility Settings</strong>: dark/light toggle, font-size adjustments.</li>
+              <li><strong>Logout</strong>: end session, redirect to login.</li>
+            </ul>
+          </li>
+          <li><strong>UI/UX</strong>:
+            <ul class="list-disc list-inside ml-6 space-y-1">
+              <li>Responsive, clean layout with Tailwind.</li>
+              <li>Navigation with notification badge.</li>
+              <li>Loading indicators, form validation, error handling.</li>
+              <li>Tables for academic &amp; fee data with search/filter.</li>
+              <li>Progress bars for course completion.</li>
+              <li>Modals for confirmations.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 4. Contact & Email Infrastructure -->
+    <section id="contact-email">
+      <h2 class="text-3xl font-bold text-blue-600 mb-4">4. Contact & Email Infrastructure</h2>
+
+      <!-- Contact Form -->
+      <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">4.1. Contact Form (Public)</h3>
+        <ul class="list-disc list-inside ml-6 space-y-2">
+          <li><strong>Form Fields</strong>: Name, Email, Subject (optional), Message.</li>
+          <li><strong>Route</strong>: POST <code>/contact</code>.</li>
+          <li><strong>Email Sending</strong>:
+            <ul class="list-disc list-inside ml-6 space-y-1">
+              <li><strong>Sender:</strong> <code>twoem.website@gmail.com</code> (App Password or OAuth2 configured).</li>
+              <li><strong>Recipient:</strong> <code>twoemcyber@gmail.com</code>.</li>
+              <li><strong>Headers</strong>:
+                <pre class="bg-gray-100 p-2 rounded"><code>from: "No Reply" &lt;twoem.website@gmail.com&gt;,
+to: "twoemcyber@gmail.com",
+replyTo: "twoemcyber@gmail.com",
+subject: `Contact Form Submission from ${'{name}'}`, ...</code></pre>
+              </li>
+            </ul>
+          </li>
+          <li><strong>Env Variables</strong>:
+            <pre class="bg-gray-100 p-2 rounded"><code>CONTACT_EMAIL_USER=twoem.website@gmail.com
+CONTACT_EMAIL_PASS=&lt;app-password-or-oauth-for-twoem.website@gmail.com&gt;</code></pre>
+          </li>
+          <li><strong>Response</strong>: Render thank-you or error feedback to user.</li>
+          <li><strong>Spam Protection</strong>: reCAPTCHA or honeypot.</li>
+          <li><strong>Logging</strong>: Optionally log submissions in DB or server logs.</li>
+        </ul>
+      </div>
+
+      <!-- Student Password Reset -->
+      <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">4.2. Student Password Reset</h3>
+        <ul class="list-disc list-inside ml-6 space-y-2">
+          <li><strong>Form</strong>: “Forgot Password” under Student Portal; student enters Reg Number or Email.</li>
+          <li><strong>Generate Token</strong>: secure random token hashed in DB with expiry (e.g., 1 hour).</li>
+          <li><strong>Email Sending</strong>:
+            <ul class="list-disc list-inside ml-6 space-y-1">
+              <li><strong>Sender:</strong> <code>twoem.website@gmail.com</code>.</li>
+              <li><strong>Recipient:</strong> student.email.</li>
+              <li><strong>Headers</strong>:
+                <pre class="bg-gray-100 p-2 rounded"><code>from: "No Reply" &lt;twoem.website@gmail.com&gt;,
+to: student.email,
+replyTo: "twoemcyber@gmail.com",
+subject: "Password Reset – Twoem Cyber Café",
+text: `Hello ${'{student.fullName}'}, Click link to reset password: https://yourdomain.com/student/reset-password?token=${'{token}'}`</code></pre>
+              </li>
+            </ul>
+          </li>
+          <li><strong>Reset Flow</strong>: Validate token; allow new password entry; hash & save; clear token; confirm to user.</li>
+          <li><strong>Env Variables</strong>: Same SMTP config as contact: <code>CONTACT_EMAIL_USER</code> &amp; <code>CONTACT_EMAIL_PASS</code>.</li>
+        </ul>
+      </div>
+
+      <!-- Automated Notifications & Receipts -->
+      <div>
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">4.3. Automated Notifications &amp; Receipts</h3>
+        <ul class="list-disc list-inside ml-6 space-y-2">
+          <li><strong>Sender:</strong> <code>twoem.website@gmail.com</code> for all automated emails (student welcome, fee receipts, notifications, academic results alerts, resource upload alerts, backup notifications).</li>
+          <li><strong>Reply-To:</strong> <code>twoemcyber@gmail.com</code>.</li>
+          <li><strong>Email Header Template</strong>:
+            <pre class="bg-gray-100 p-2 rounded"><code>from: "No Reply" &lt;twoem.website@gmail.com&gt;,
+to: ${'{recipientEmail}'},
+replyTo: "twoemcyber@gmail.com",
+subject: "...",
+text: "...",
+html: "..."</code></pre>
+          </li>
+          <li><strong>Env Variables</strong>:
+            <pre class="bg-gray-100 p-2 rounded"><code>EMAIL_USER=twoem.website@gmail.com
+EMAIL_PASS=&lt;app-password-or-oauth-for-twoem.website@gmail.com&gt;</code></pre>
+          </li>
+          <li><strong>Notes</strong>:
+            <ul class="list-disc list-inside ml-6 space-y-1">
+              <li>Ensure Gmail account <code>twoem.website@gmail.com</code> has 2FA enabled &amp; App Password or OAuth2 credentials for SMTP.</li>
+              <li><code>replyTo</code> always set to <code>twoemcyber@gmail.com</code>.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Admin Password Reset Instruction -->
+      <div>
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">4.4. Admin Password Reset Instruction</h3>
+        <p class="ml-6 mb-2">Admin password is managed via environment variable only; no UI reset. To rotate:</p>
+        <pre class="bg-gray-100 p-2 rounded ml-6"><code>node -e "console.log(require('bcrypt').hashSync('NewAdminPassword', parseInt(process.env.SALT_ROUNDS, 10) || 10));"</code></pre>
+        <p class="ml-6">Update <code>ADMIN_PASSWORD_HASH</code> in environment and restart app. No email flow for admin password reset.</p>
+      </div>
+    </section>
+
+    <!-- 5. File Upload & Storage -->
+    <section id="file-storage">
+      <h2 class="text-3xl font-bold text-blue-600 mb-4">5. File Upload &amp; Storage</h2>
+
+      <!-- Public & Eulogy Documents -->
+      <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">5.1. Public &amp; Eulogy Documents (Downloads)</h3>
+        <ul class="list-disc list-inside ml-6 space-y-2">
+          <li><strong>Upload</strong>: Admin via dashboard; size limit 10MB; category <code>public</code> or <code>eulogy</code>. Store metadata in DB: storedName, originalName, category, uploadDate, expiryDate (for eulogy = uploadDate + 7 days).</li>
+          <li><strong>Storage</strong>: Persistent storage (Render persistent disk or external like AWS S3).</li>
+          <li><strong>Serving</strong>: Public: static or route. Eulogy: hide/delete after expiry.</li>
+          <li><strong>Cleanup</strong>: Scheduled job or on-access check to remove expired eulogy files &amp; metadata.</li>
+          <li><strong>Download Links</strong>:
+            <pre class="bg-gray-100 p-2 rounded"><code>&lt;a href="/uploads/public/${'{storedName}'}" download&gt;${'{originalName}'}&lt;/a&gt;</code></pre>
+          </li>
+          <li><strong>Security</strong>: Validate file types; admin-only upload; prevent path traversal.</li>
+        </ul>
+      </div>
+
+      <!-- Student Resources -->
+      <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">5.2. Student Resources</h3>
+        <ul class="list-disc list-inside ml-6 space-y-2">
+          <li><strong>Upload</strong>: Admin uploads PDF, DOCX, XLSX, PPTX, JPG, PNG; max 3MB. Metadata: description, targetCourse, expiryDate.</li>
+          <li><strong>Storage &amp; Serving</strong>: Persistent storage; metadata in DB. Student Portal lists active resources; download via authenticated route.</li>
+          <li><strong>Notifications</strong>: Email via <code>twoem.website@gmail.com</code> or in-app notification.</li>
+          <li><strong>Cleanup</strong>: Hide/delete expired resources.</li>
+        </ul>
+      </div>
+
+      <!-- Certificate Uploads -->
+      <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">5.3. Certificate Uploads</h3>
+        <ul class="list-disc list-inside ml-6 space-y-2">
+          <li><strong>Upload</strong>: Admin uploads certificate PDF per eligible student; metadata: studentReg, uploadDate; store in persistent storage.</li>
+          <li><strong>Serving</strong>: Authenticated route so only intended student can download.</li>
+          <li><strong>Student Portal</strong>: If eligible &amp; file exists: show “Download Certificate” button linking to <code>/student/certificate/download</code>; else show pending status.</li>
+        </ul>
+      </div>
+
+      <!-- Backup Uploads -->
+      <div>
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">5.4. Backup Uploads (Admin)</h3>
+        <ul class="list-disc list-inside ml-6 space-y-2">
+          <li><strong>Upload</strong>: Admin uploads backup files (DB dumps, CSV exports) via dashboard; size limit e.g., 50MB; metadata: originalName, description, uploadDate.</li>
+          <li><strong>Storage</strong>: Persistent storage, protected.</li>
+          <li><strong>Download</strong>: Admin can download backups.</li>
+          <li><strong>Restore</strong>: Optionally implement import logic with validation.</li>
+          <li><strong>Notifications</strong>: Optionally email admin via <code>twoem.website@gmail.com</code> after successful backup.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 6. Database Schema Outline -->
+    <section id="database-schema">
+      <h2 class="text-3xl font-bold text-blue-600 mb-4">6. Database Schema Outline</h2>
+      <p>Choose MongoDB or PostgreSQL; adapt accordingly. Conceptual collections/tables:</p>
+      <ul class="list-disc list-inside ml-6 space-y-4">
+        <li>
+          <strong>AdminUser (Future)</strong>:
+          <ul class="list-disc list-inside ml-6 space-y-1">
+            <li><code>id</code>, <code>username</code>, <code>passwordHash</code>, <code>role</code>, <code>createdAt</code>, <code>updatedAt</code>, <code>lastLoginAt</code>.</li>
+            <li>Current: single env-based admin; implement when multi-admin needed.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Student</strong>:
+          <ul class="list-disc list-inside ml-6 space-y-1">
+            <li><code>id</code>, <code>regNumber</code> (unique), <code>fullName</code>, <code>email</code>, <code>passwordHash</code>, <code>mustResetPassword</code> (boolean), <code>enrollmentDate</code>, <code>isActive</code> (boolean), <code>passwordResetTokenHash</code>, <code>passwordResetExpires</code>, <code>createdAt</code>, <code>updatedAt</code>.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Fees</strong>:
+          <ul class="list-disc list-inside ml-6 space-y-1">
+            <li><code>id</code>, <code>studentId</code>, <code>amountPaid</code>, <code>paymentDate</code>, <code>referenceNumber</code>, <code>createdAt</code>.</li>
+            <li>Compute totalPaid via aggregation; balance = courseFee - totalPaid.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Academics</strong>:
+          <ul class="list-disc list-inside ml-6 space-y-1">
+            <li><code>id</code>, <code>studentId</code>, <code>unitMarks</code>: object with 8 units, <code>examMarks</code>: { theory, practical }, <code>finalScore</code>, <code>isEligibleCertificate</code>, <code>createdAt</code>, <code>updatedAt</code>.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Resources</strong>:
+          <ul class="list-disc list-inside ml-6 space-y-1">
+            <li><code>id</code>, <code>storedName</code>, <code>originalName</code>, <code>description</code>, <code>targetCourse</code>, <code>uploadDate</code>, <code>expiryDate</code>, <code>uploadedBy</code>, <code>createdAt</code>, <code>updatedAt</code>.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Notifications</strong>:
+          <ul class="list-disc list-inside ml-6 space-y-1">
+            <li><code>id</code>, <code>studentId</code> (nullable for global), <code>title</code>, <code>message</code>, <code>isGlobal</code> (boolean), <code>sentAt</code>, <code>readBy</code> (array of studentIds), <code>createdAt</code>.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>WiFiCredentials</strong>:
+          <ul class="list-disc list-inside ml-6 space-y-1">
+            <li><code>id</code>, <code>ssid</code>, <code>password</code>, <code>instructions</code>, <code>disclaimer</code>, <code>updatedAt</code>, <code>createdAt</code>.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>AuditLogs</strong>:
+          <ul class="list-disc list-inside ml-6 space-y-1">
+            <li><code>id</code>, <code>adminUser</code>, <code>actionType</code>, <code>targetEntity</code>, <code>details</code>, <code>timestamp</code>, <code>ipAddress</code>.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Backups</strong>:
+          <ul class="list-disc list-inside ml-6 space-y-1">
+            <li><code>id</code>, <code>storedName</code>, <code>originalName</code>, <code>description</code>, <code>uploadDate</code>, <code>uploadedBy</code>, <code>filePath</code>, <code>createdAt</code>.</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 7. Environment Variables -->
+    <section id="env-vars">
+      <h2 class="text-3xl font-bold text-blue-600 mb-4">7. Environment Variables</h2>
+      <p>Store secrets via <code>.env</code> (excluded from source control) or hosting environment settings. Example:</p>
+      <pre class="bg-gray-100 p-4 rounded overflow-x-auto"><code># ---------- Admin ----------
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD_HASH=$2b$10$XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+# ---------- Session ----------
+SESSION_SECRET=&lt;long-random-string&gt;
+
+# ---------- Email Accounts &amp; SMTP ----------
+EMAIL_USER=twoem.website@gmail.com
+EMAIL_PASS=&lt;app-password-or-oauth-for-twoem.website@gmail.com&gt;
+# replyTo always set to twoemcyber@gmail.com in code
+
+# ---------- Database ----------
+DATABASE_URL=&lt;your-db-connection-string&gt;
+
+# ---------- App Settings ----------
+PORT=3000
+SALT_ROUNDS=10
+</code></pre>
+      <ul class="list-disc list-inside ml-6 space-y-2">
+        <li><strong>EMAIL_USER / EMAIL_PASS</strong>: used for all email sending (contact form, password resets, notifications, receipts) from <code>twoem.website@gmail.com</code>.</li>
+        <li><strong>replyTo</strong> in code always set to <code>twoemcyber@gmail.com</code>.</li>
+        <li><strong>ADMIN_PASSWORD_HASH</strong>: bcrypt hash of admin password; rotate by generating new hash and updating env.</li>
+        <li><strong>SESSION_SECRET</strong>: for express-session.</li>
+        <li><strong>DATABASE_URL</strong>: connection string to MongoDB/PostgreSQL.</li>
+        <li><strong>SALT_ROUNDS</strong>: for bcrypt hashing.</li>
+      </ul>
+    </section>
+
+    <!-- 8. Implementation Notes -->
+    <section id="implementation">
+      <h2 class="text-3xl font-bold text-blue-600 mb-4">8. Implementation Notes</h2>
+
+      <!-- Server Setup -->
+      <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">8.1. Server Setup (Express)</h3>
+        <ul class="list-disc list-inside ml-6 space-y-2">
+          <li>Load environment: <code>require('dotenv').config()</code>.</li>
+          <li>Configure <code>express-session</code> with <code>secret: process.env.SESSION_SECRET</code>, <code>resave: false</code>, <code>saveUninitialized: false</code>, secure cookies under HTTPS.</li>
+          <li><code>app.use(express.urlencoded({ extended: true })); app.use(express.json());</code></li>
+          <li>Serve static: <code>app.use(express.static(path.join(__dirname, 'public')));</code></li>
+          <li>View engine: EJS or alternative templating.</li>
+          <li>Security: helmet, rate-limiter on login routes, CSRF protection for forms.</li>
+          <li>Logging: morgan or custom logger.</li>
+          <li>Health-check endpoint <code>/health</code> for uptime monitoring.</li>
+        </ul>
+      </div>
+
+      <!-- Auth Middleware -->
+      <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">8.2. Authentication Middleware</h3>
+        <pre class="bg-gray-100 p-4 rounded overflow-x-auto"><code>function ensureAdmin(req, res, next) {
+  if (req.session && req.session.isAdmin) return next();
+  return res.redirect('/admin/login');
+}
+
+function ensureStudent(req, res, next) {
+  if (req.session && req.session.studentId) return next();
+  return res.redirect('/student/login');
+}</code></pre>
+      </div>
+
+      <!-- Email Utility -->
+      <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">8.3. Email Utility (Nodemailer)</h3>
+        <p>Setup transport with <code>twoem.website@gmail.com</code> for all emails:</p>
+        <pre class="bg-gray-100 p-4 rounded overflow-x-auto"><code>const nodemailer = require('nodemailer');
+require('dotenv').config();
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,          // twoem.website@gmail.com
+    pass: process.env.EMAIL_PASS,
+  }
+});
+
+async function sendEmail({ to, subject, text, html }) {
+  const mailOptions = {
+    from: `"No Reply" <${process.env.EMAIL_USER}>`,
+    to,
+    replyTo: 'twoemcyber@gmail.com',
+    subject,
+    text,
+    html
+  };
+  return transporter.sendMail(mailOptions);
+}</code></pre>
+        <p>Use <code>sendEmail</code> for contact form, student welcome/reset, fee receipts, notifications, academic results, resource alerts, etc.</p>
+      </div>
+
+      <!-- Admin Login Logic -->
+      <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">8.4. Admin Login Logic Example</h3>
+        <pre class="bg-gray-100 p-4 rounded overflow-x-auto"><code>const bcrypt = require('bcrypt');
+
+app.post('/admin/login', loginLimiter, async (req, res) => {
+  const { username, password } = req.body;
+  if (username === process.env.ADMIN_USERNAME &&
+      await bcrypt.compare(password, process.env.ADMIN_PASSWORD_HASH)) {
+    req.session.isAdmin = true;
+    return res.redirect('/admin/dashboard');
+  }
+  return res.render('admin-login', { error: 'Invalid credentials' });
+});</code></pre>
+      </div>
+
+      <!-- Student Login & Reset -->
+      <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">8.5. Student Login &amp; First-Time Reset</h3>
+        <pre class="bg-gray-100 p-4 rounded overflow-x-auto"><code>// Login handler
+app.post('/student/login', loginLimiter, async (req, res) => {
+  const { regNumber, password } = req.body;
+  const student = await Student.findOne({ regNumber, isActive: true });
+  if (!student) return res.render('student-login', { error: 'Invalid credentials' });
+  const match = await bcrypt.compare(password, student.passwordHash);
+  if (!match) return res.render('student-login', { error: 'Invalid credentials' });
+  if (student.mustResetPassword) {
+    req.session.tempStudentId = student.id;
+    return res.redirect('/student/reset-password-first');
+  }
+  req.session.studentId = student.id;
+  return res.redirect('/student/dashboard');
+});
+
+// First-time reset
+app.get('/student/reset-password-first', (req, res) => {
+  // Render form only if req.session.tempStudentId exists
+});
+app.post('/student/reset-password-first', async (req, res) => {
+  const studentId = req.session.tempStudentId;
+  const { newPassword, confirmPassword } = req.body;
+  if (newPassword !== confirmPassword) {
+    return res.render('student-reset-first', { error: 'Passwords do not match' });
+  }
+  const hash = await bcrypt.hash(newPassword, parseInt(process.env.SALT_ROUNDS, 10));
+  await Student.updateOne({ _id: studentId }, { passwordHash: hash, mustResetPassword: false });
+  req.session.studentId = studentId;
+  delete req.session.tempStudentId;
+  return res.redirect('/student/dashboard');
+});</code></pre>
+      </div>
+
+      <!-- File Upload & Cleanup -->
+      <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">8.6. File Upload &amp; Cleanup</h3>
+        <p>Configure Multer for different categories:</p>
+        <pre class="bg-gray-100 p-4 rounded overflow-x-auto"><code>const multer = require('multer');
+
+// Public/Eulogy uploads (10MB limit)
+const storagePublic = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, 'public/uploads/public'),
+  filename: (req, file, cb) => {
+    const uniqueName = Date.now() + '-' + file.originalname;
+    cb(null, uniqueName);
+  }
+});
+const uploadPublic = multer({ storage: storagePublic, limits: { fileSize: 10 * 1024 * 1024 } });
+
+// Resources uploads (3MB limit)
+const storageResources = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, 'uploads/resources'),
+  filename: (req, file, cb) => {
+    const uniqueName = Date.now() + '-' + file.originalname;
+    cb(null, uniqueName);
+  }
+});
+const uploadResource = multer({ storage: storageResources, limits: { fileSize: 3 * 1024 * 1024 } });
+
+// Certificates uploads (5MB limit)
+const storageCerts = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, 'uploads/certificates'),
+  filename: (req, file, cb) => {
+    const uniqueName = req.session.studentId + '-' + Date.now() + '-' + file.originalname;
+    cb(null, uniqueName);
+  }
+});
+const uploadCert = multer({ storage: storageCerts, limits: { fileSize: 5 * 1024 * 1024 } });
+
+// Backups uploads (50MB limit)
+const storageBackups = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, 'uploads/backups'),
+  filename: (req, file, cb) => {
+    const uniqueName = Date.now() + '-' + file.originalname;
+    cb(null, uniqueName);
+  }
+});
+const uploadBackup = multer({ storage: storageBackups, limits: { fileSize: 50 * 1024 * 1024 } });
+</code></pre>
+        <p>Implement cleanup for expired eulogy/resources via scheduled job (node-cron) or check-on-access logic.</p>
+      </div>
+
+      <!-- Notifications & Support Tickets -->
+      <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">8.7. Notifications &amp; Support Tickets</h3>
+        <p>Define <code>Notification</code> and <code>SupportTicket</code> schemas. Admin UI to compose broadcasts or individual messages; Student Portal to view inbox and submit tickets. Use <code>twoem.website@gmail.com</code> for email notifications, replyTo <code>twoemcyber@gmail.com</code>.</p>
+      </div>
+
+      <!-- Backup & Import -->
+      <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">8.8. Backup &amp; Import</h3>
+        <p>Admin can export data as CSV/JSON, download, and upload for import with validation. Store backups securely, notify admin via <code>twoem.website@gmail.com</code> if desired.</p>
+      </div>
+
+      <!-- Audit Logging -->
+      <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">8.9. Audit Logging</h3>
+        <p>After each admin action, call <code>logAction(adminUser, actionType, details)</code>; store in DB; Admin UI to view/filter logs.</p>
+      </div>
+
+      <!-- Analytics -->
+      <div>
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">8.10. Analytics</h3>
+        <p>Aggregate usage data from DB; display charts via Chart.js in Admin Dashboard; allow date-range filters and export; optionally email reports via <code>twoem.website@gmail.com</code>.</p>
+      </div>
+    </section>
+
+    <!-- 9. UX/UI Recommendations -->
+    <section id="ux-ui">
+      <h2 class="text-3xl font-bold text-blue-600 mb-4">9. UX/UI Recommendations</h2>
+      <ul class="list-disc list-inside ml-6 space-y-2">
+        <li><strong>Framework</strong>: Tailwind CSS for consistency.</li>
+        <li><strong>Header/Footer</strong>: Sticky header with logo &amp; nav; notification badge in portals; footer with quick links &amp; contact info.</li>
+        <li><strong>Typography &amp; Colors</strong>: Primary blue for buttons/links; headings <code>text-2xl/3xl</code>; body text <code>text-base</code> with high contrast.</li>
+        <li><strong>Layouts</strong>:
+          <ul class="list-disc list-inside ml-6">
+            <li>Public pages: hero/banner, service cards, responsive grids for gallery/services.</li>
+            <li>Portals: sidebar or top nav; cards/tables for data; modals for forms.</li>
+          </ul>
+        </li>
+        <li><strong>Forms</strong>: clear labels, client-side validation, server-side checks, error/success feedback.</li>
+        <li><strong>Buttons</strong>: <code>px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700</code>.</li>
+        <li><strong>Tables</strong>: striped or bordered rows, search/filter inputs, pagination for large lists.</li>
+        <li><strong>Dark Mode</strong>: Toggle persisted in localStorage; apply Tailwind dark classes.</li>
+        <li><strong>Loading Indicators</strong>: Spinners/skeletons when loading data.</li>
+        <li><strong>Error Pages</strong>: Custom 404/500 consistent with branding.</li>
+        <li><strong>Accessibility</strong>: Semantic HTML, ARIA labels, keyboard navigation, color contrast compliance.</li>
+        <li><strong>Lightbox</strong>: For gallery images.</li>
+        <li><strong>Progress Bars</strong>: In Student Portal for course completion.</li>
+        <li><strong>Charts</strong>: In Admin analytics.</li>
+        <li><strong>Search &amp; Filter</strong>: Live filtering on lists via JS.</li>
+        <li><strong>Modals</strong>: Confirm destructive actions.</li>
+        <li><strong>Tooltips</strong>: Help icons for complex fields.</li>
+        <li><strong>Notification Toasts</strong>: Transient alerts on actions.</li>
+        <li><strong>Breadcrumbs</strong>: Show path in portals.</li>
+      </ul>
+    </section>
+
+    <!-- 10. Deployment & Operations -->
+    <section id="deployment">
+      <h2 class="text-3xl font-bold text-blue-600 mb-4">10. Deployment &amp; Operations</h2>
+
+      <!-- Hosting -->
+      <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">10.1. Hosting</h3>
+        <ul class="list-disc list-inside ml-6 space-y-2">
+          <li><strong>Render.com</strong>:
+            <ul class="list-disc list-inside ml-6 space-y-1">
+              <li>Connect GitHub repo.</li>
+              <li>Build command: <code>npm install</code>; Start: <code>npm start</code> or <code>node server.js</code>.</li>
+              <li>Set environment variables in Render Dashboard:
+                <ul class="list-disc list-inside ml-6">
+                  <li><code>ADMIN_USERNAME</code>, <code>ADMIN_PASSWORD_HASH</code>, <code>SESSION_SECRET</code>,</li>
+                  <li><code>EMAIL_USER=twoem.website@gmail.com</code>, <code>EMAIL_PASS</code>,</li>
+                  <li><code>DATABASE_URL</code>, <code>PORT</code>, <code>SALT_ROUNDS</code>.</li>
+                </ul>
+              </li>
+              <li>Configure Persistent Disk or use external storage (AWS S3) for uploads.</li>
+              <li>HTTPS provided by Render.</li>
+              <li>Scaling: Increase instances if load grows.</li>
+            </ul>
+          </li>
+          <li><strong>Database</strong>: Managed MongoDB Atlas or Postgres; connection via <code>DATABASE_URL</code>.</li>
+          <li><strong>Logging &amp; Monitoring</strong>: Render logs; integrate Sentry or similar for error tracking.</li>
+          <li><strong>CI/CD</strong>: Auto-deploy on push to main branch.</li>
+          <li><strong>Backups</strong>: Database automated backups via managed provider; file storage backups to external storage.</li>
+          <li><strong>Maintenance Mode</strong>: Middleware/flag to serve maintenance page during updates.</li>
+          <li><strong>Health Checks</strong>: Endpoint <code>/health</code> for uptime monitoring.</li>
+        </ul>
+      </div>
+
+      <!-- Env & Secrets -->
+      <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">10.2. Environment &amp; Secrets Management</h3>
+        <ul class="list-disc list-inside ml-6 space-y-2">
+          <li><strong>Local Development</strong>: Use <code>.env</code> (excluded via <code>.gitignore</code>), provide <code>.env.example</code>.</li>
+          <li><strong>Production</strong>: Set env vars in hosting dashboard; do not commit secrets.</li>
+          <li><strong>Secret Rotation</strong>:
+            <ul class="list-disc list-inside ml-6 space-y-1">
+              <li>Admin password: generate new bcrypt hash, update <code>ADMIN_PASSWORD_HASH</code>.</li>
+              <li>Email credentials: generate new App Password or OAuth tokens, update env.</li>
+            </ul>
+          </li>
+          <li><strong>Server Restart</strong>: After env changes, restart app to pick up new values.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 11. Security & Compliance -->
+    <section id="security">
+      <h2 class="text-3xl font-bold text-blue-600 mb-4">11. Security &amp; Compliance</h2>
+      <ul class="list-disc list-inside ml-6 space-y-2">
+        <li><strong>Authentication &amp; Authorization</strong>:
+          <ul class="list-disc list-inside ml-6">
+            <li>Admin: env-based credentials; session middleware protection.</li>
+            <li>Student: DB-based accounts; default-password forced reset; password reset tokens.</li>
+            <li>Rate-limit login endpoints.</li>
+            <li>Option for 2FA for admin in future.</li>
+          </ul>
+        </li>
+        <li><strong>Session Security</strong>: Secure, HttpOnly cookies; <code>sameSite</code>; expiration policy (e.g., 1 hour inactivity).</li>
+        <li><strong>Password Storage</strong>: bcrypt with <code>SALT_ROUNDS</code> from env.</li>
+        <li><strong>Input Validation &amp; Sanitization</strong>: Validate all inputs server-side; sanitize to prevent injection (NoSQL/SQL, XSS).</li>
+        <li><strong>CSRF Protection</strong>: Use CSRF tokens for form submissions.</li>
+        <li><strong>File Upload Security</strong>: Validate file types &amp; sizes; store uploads safely; prevent path traversal; restrict executables.</li>
+        <li><strong>Data Encryption</strong>: HTTPS for transit; consider encrypting sensitive fields at rest.</li>
+        <li><strong>Audit Logging</strong>: Track critical actions; store securely; protect from tampering.</li>
+        <li><strong>Data Retention &amp; Deletion</strong>: Eulogy/resource auto-expiry; student deregistration anonymize/delete per policy.</li>
+        <li><strong>Privacy Policy</strong>: Detailed on Data Protection page; cookie usage explained.</li>
+        <li><strong>Backup &amp; Disaster Recovery</strong>: Regular backups of DB &amp; file storage; offsite storage; test restore procedures.</li>
+        <li><strong>Dependency Management</strong>: Keep dependencies updated; run <code>npm audit</code> regularly.</li>
+        <li><strong>Third-Party Integrations</strong>: Gmail SMTP (App Password/OAuth2); analytics with opt-out; chatbot without sensitive data exposure.</li>
+        <li><strong>Deployment Security</strong>: Secure hosting; least-privilege DB credentials; restrict file system access; use secure storage.</li>
+        <li><strong>Health Monitoring &amp; Alerts</strong>: Monitor errors; alerts on downtime or critical failures.</li>
+      </ul>
+    </section>
+
+    <!-- 12. Analytics & Monitoring -->
+    <section id="analytics">
+      <h2 class="text-3xl font-bold text-blue-600 mb-4">12. Analytics &amp; Monitoring</h2>
+      <ul class="list-disc list-inside ml-6 space-y-2">
+        <li><strong>Metrics</strong>: Uptime/health checks; request rates; error rates; admin actions; student portal usage; resource downloads; email deliverability.</li>
+        <li><strong>Tools</strong>: Render logs; integrate Sentry for error tracking; custom Admin dashboards for usage metrics.</li>
+        <li><strong>Alerts</strong>: Email or webhooks on server errors or downtime.</li>
+        <li><strong>Reporting</strong>: Admin can export analytics as CSV/PDF.</li>
+      </ul>
+    </section>
+
+    <!-- 13. Future Extensions -->
+    <section id="future">
+      <h2 class="text-3xl font-bold text-blue-600 mb-4">13. Future Extensions</h2>
+      <ul class="list-disc list-inside ml-6 space-y-2">
+        <li>Multiple Admin Accounts &amp; Roles: implement AdminUser model with roles/permissions.</li>
+        <li>Payment Gateway Integration: M-Pesa, Stripe, etc., for online fee payments.</li>
+        <li>Mobile App / PWA: Wrap Student Portal for offline access.</li>
+        <li>Multi-language Support: English &amp; Swahili localization.</li>
+        <li>Learning Management Features: Quizzes, assignments, automated grading.</li>
+        <li>API Layer: RESTful or GraphQL for mobile apps or third-party integrations.</li>
+        <li>Push Notifications: Web or mobile push alerts.</li>
+        <li>Advanced Analytics: BI tools for deeper insights.</li>
+        <li>Automated Backup Scheduling: Cron jobs or serverless functions to back up DB &amp; file storage to external buckets.</li>
+        <li>AI Chatbot: Integrate for FAQ support.</li>
+        <li>Two-Factor Authentication: For Admin (and potentially students) to increase security.</li>
+        <li>Online Payment Receipts &amp; Invoicing: Generate PDF invoices/receipts automatically.</li>
+        <li>Third-Party Integrations: Social login (optional), SMS notifications via API, etc.</li>
+      </ul>
+    </section>
+
+    <!-- 14. Examples & Scripts -->
+    <section>
+      <h2 class="text-3xl font-bold text-blue-600 mb-4">14. Examples &amp; Scripts</h2>
+
+      <!-- Generate bcrypt Hash -->
+      <div class="mb-6">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">14.1. Generate bcrypt Hash for Admin Password</h3>
+        <pre class="bg-gray-100 p-4 rounded overflow-x-auto"><code>node -e "console.log(require('bcrypt').hashSync('YourNewAdminPasswordHere', parseInt(process.env.SALT_ROUNDS, 10) || 10));"</code></pre>
+        <p class="ml-6">Copy output into <code>ADMIN_PASSWORD_HASH</code> in environment; restart app.</p>
+      </div>
+
+      <!-- Admin Login Snippet -->
+      <div class="mb-6">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">14.2. Admin Login Snippet (Express)</h3>
+        <pre class="bg-gray-100 p-4 rounded overflow-x-auto"><code>const bcrypt = require('bcrypt');
+
+app.post('/admin/login', loginLimiter, async (req, res) => {
+  const { username, password } = req.body;
+  if (username === process.env.ADMIN_USERNAME) {
+    const match = await bcrypt.compare(password, process.env.ADMIN_PASSWORD_HASH);
+    if (match) {
+      req.session.isAdmin = true;
+      return res.redirect('/admin/dashboard');
+    }
+  }
+  return res.render('admin-login', { error: 'Invalid credentials' });
+});</code></pre>
+      </div>
+
+      <!-- Contact-Form Email Utility -->
+      <div class="mb-6">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">14.3. Contact-Form Email Utility</h3>
+        <pre class="bg-gray-100 p-4 rounded overflow-x-auto"><code>const nodemailer = require('nodemailer');
+require('dotenv').config();
+
+const contactTransporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER, // twoem.website@gmail.com
+    pass: process.env.EMAIL_PASS,
+  }
+});
+
+async function sendContactFormEmail({ name, email, subject, message }) {
+  const mailOptions = {
+    from: `"No Reply" <${process.env.EMAIL_USER}>`,
+    to: 'twoemcyber@gmail.com',
+    replyTo: 'twoemcyber@gmail.com',
+    subject: `Contact Form Submission from ${name}`,
+    text: `Name: ${name}\nEmail: ${email}\nSubject: ${subject}\nMessage:\n${message}`
+  };
+  return contactTransporter.sendMail(mailOptions);
+}</code></pre>
+      </div>
+
+      <!-- Automated Email Utility -->
+      <div class="mb-6">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">14.4. Automated Email Utility</h3>
+        <pre class="bg-gray-100 p-4 rounded overflow-x-auto"><code>const nodemailer = require('nodemailer');
+require('dotenv').config();
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER, // twoem.website@gmail.com
+    pass: process.env.EMAIL_PASS,
+  }
+});
+
+async function sendSupportEmail({ to, subject, text, html }) {
+  const mailOptions = {
+    from: `"No Reply" <${process.env.EMAIL_USER}>`,
+    to,
+    replyTo: 'twoemcyber@gmail.com',
+    subject,
+    text,
+    html
+  };
+  return transporter.sendMail(mailOptions);
+}</code></pre>
+      </div>
+
+      <!-- Student Password Reset Snippet -->
+      <div>
+        <h3 class="text-2xl font-semibold text-gray-800 mb-2">14.5. Student Password Reset Snippet</h3>
+        <pre class="bg-gray-100 p-4 rounded overflow-x-auto"><code>const crypto = require('crypto');
+
+// Generate token
+function generateResetToken() {
+  return crypto.randomBytes(32).toString('hex');
+}
+
+// In reset route:
+const token = generateResetToken();
+// Hash token before storing: bcrypt.hash(token, saltRounds)
+await Student.updateOne({ regNumber }, {
+  passwordResetTokenHash: hashedToken,
+  passwordResetExpires: Date.now() + 3600000 // 1 hour
+});
+// Send email:
+sendSupportEmail({
+  to: student.email,
+  subject: 'Password Reset – Twoem Cyber Café',
+  text: `Hello ${'{student.fullName}'}, Use this link to reset your password: https://yourdomain.com/student/reset-password?token=${'{token}'}`
+});</code></pre>
+      </div>
+    </section>
+
+    <!-- 15. Deployment Checklist -->
+    <section id="deployment-checklist">
+      <h2 class="text-3xl font-bold text-blue-600 mb-4">15. Deployment Checklist</h2>
+      <ol class="list-decimal list-inside ml-6 space-y-2">
+        <li><strong>Prepare Environment Variables</strong>: <code>ADMIN_USERNAME</code>, <code>ADMIN_PASSWORD_HASH</code>, <code>SESSION_SECRET</code>, <code>EMAIL_USER=twoem.website@gmail.com</code>, <code>EMAIL_PASS</code>, <code>DATABASE_URL</code>, <code>PORT</code>, <code>SALT_ROUNDS</code>.</li>
+        <li><strong>Database Setup</strong>: Provision managed DB; apply schema/migrations.</li>
+        <li><strong>Persistent Storage</strong>: Configure Persistent Disk or external storage (S3) for uploads.</li>
+        <li><strong>Email Setup</strong>: Enable Gmail 2FA; generate App Password or OAuth for <code>twoem.website@gmail.com</code>.</li>
+        <li><strong>Codebase</strong>: Include <code>.env.example</code> with placeholders; <code>.gitignore</code> excludes <code>.env</code>, <code>node_modules/</code>, upload temp folders.</li>
+        <li><strong>Hosting Platform</strong>: Connect GitHub repo to Render.com; build <code>npm install</code>; start <code>npm start</code>; set env vars; configure storage.</li>
+        <li><strong>SSL/HTTPS</strong>: Ensure site uses HTTPS.</li>
+        <li><strong>Logging &amp; Monitoring</strong>: Enable server logs; integrate Sentry or similar.</li>
+        <li><strong>Testing</strong>: Test public pages, admin login &amp; modules, student flows, file uploads/downloads &amp; expiry logic, email sending (contact, resets, notifications), security (rate-limiting, session), responsive design.</li>
+        <li><strong>Backup Strategy</strong>: DB automated backups; file storage backups.</li>
+        <li><strong>Documentation</strong>: README.md summarizing spec; developer guide for env setup &amp; admin password rotation.</li>
+        <li><strong>Launch</strong>: Announce site; monitor logs &amp; metrics.</li>
+        <li><strong>Iterate</strong>: Collect feedback; plan next features (payment gateway, multi-admin roles, PWA).</li>
+        <li><strong>Maintenance</strong>: Regular dependency updates, security audits, backups.</li>
+      </ol>
+    </section>
+
+    <!-- 16. Documentation & README -->
+    <section id="documentation">
+      <h2 class="text-3xl font-bold text-blue-600 mb-4">16. Documentation &amp; README</h2>
+      <p>Create a <code>README.md</code> in GitHub repo covering:</p>
+      <ul class="list-disc list-inside ml-6 space-y-2">
+        <li>Project overview &amp; features with links to spec sections.</li>
+        <li>Installation: clone, <code>npm install</code>, <code>.env</code> setup with placeholders.</li>
+        <li>Environment variables details &amp; admin password rotation instructions.</li>
+        <li>Database setup instructions.</li>
+        <li>Running locally: <code>npm start</code>; dev notes.</li>
+        <li>Deployment instructions: Render.com specifics &amp; env config.</li>
+        <li>Email configuration: setting up Gmail App Password for <code>twoem.website@gmail.com</code>, replyTo logic to <code>twoemcyber@gmail.com</code>.</li>
+        <li>File storage persistent storage guidance.</li>
+        <li>Contributor guidelines if multiple devs collaborate.</li>
+        <li>License information if open source.</li>
+        <li>Support contact info: <code>twoemcyber@gmail.com</code>, Whiz contact as needed.</li>
+      </ul>
+    </section>
+
+    <!-- 17. Final Remarks -->
+    <section id="final-remarks">
+      <h2 class="text-3xl font-bold text-blue-600 mb-4">17. Final Remarks</h2>
+      <p>This document is exhaustive, covering every aspect of the Twoem Cyber Café website, with the updated email configuration:</p>
+      <ul class="list-disc list-inside ml-6 space-y-2">
+        <li><strong>Contact-form emails</strong> sent from <code>twoem.website@gmail.com</code> to <code>twoemcyber@gmail.com</code>.</li>
+        <li><strong>All automated emails</strong> (password resets, notifications, receipts, academic results, resource alerts, backups) sent from <code>twoem.website@gmail.com</code> (No Reply) with <code>replyTo: twoemcyber@gmail.com</code>.</li>
+        <li><strong>Admin password</strong> managed exclusively via environment variable (<code>ADMIN_PASSWORD_HASH</code>); no forced reset in UI.</li>
+        <li><strong>Student password flows</strong> remain with forced reset on first login and reset via email.</li>
+        <li>All modules (student management, fees, academics, resources, notifications, backups, analytics, audit logs) fully described.</li>
+        <li>Security, data protection, and compliance thoroughly addressed.</li>
+        <li>UX/UI recommendations ensure modern, accessible, responsive experience.</li>
+        <li>Deployment checklist ensures smooth launch and maintenance.</li>
+        <li>Future extensions outlined for continued growth.</li>
+      </ul>
+      <p class="mt-4 italic">End of Final Specification. Every detail is included; nothing is omitted. Use this as the definitive guide for implementation.</p>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t mt-12">
+    <div class="container mx-auto py-6 px-6 text-center text-gray-600 text-sm">
+      <p>Designed by WHIZ. Support: <a href="mailto:twoemcyber@gmail.com" class="text-blue-600 hover:underline">twoemcyber@gmail.com</a> | Phone: +254 707 330 204</p>
+      <p>&copy; <span id="year"></span> Twoem Cyber Café. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile nav toggle
+    document.getElementById('nav-toggle').addEventListener('click', () => {
+      document.getElementById('mobile-nav').classList.toggle('hidden');
+    });
+    // Set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
