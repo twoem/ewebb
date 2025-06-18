@@ -243,7 +243,7 @@ def main():
     )
     
     # Test admin login
-    admin_login_success = tester.test_admin_login("admin", "Pass@2025")
+    admin_login_success = tester.test_admin_login("Babuu", "Pass@2025")
     
     # If login successful, test authenticated endpoints
     if admin_login_success:
