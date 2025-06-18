@@ -117,7 +117,7 @@ const AdminDashboard = () => {
   const updateContactStatus = async (contactId, status) => {
     try {
       const token = localStorage.getItem('adminToken');
-      const backendUrl = process.env.REACT_APP_BACKEND_URL;
+      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
       
       await axios.put(`${backendUrl}/api/admin/contacts/${contactId}/status?status=${status}`, {}, {
         headers: { 'Authorization': `Bearer ${token}` }
