@@ -1,0 +1,31 @@
+🚀 Starting EWEBB API tests against http://localhost:8001
+
+🔍 Testing Health Check...
+✅ Passed - Status: 200
+✅ Health check response contains 'healthy' status
+
+🔍 Testing Contact Form Submission...
+✅ Passed - Status: 200
+✅ Contact form submission successful
+
+🔍 Testing Admin Login...
+✅ Passed - Status: 200
+✅ Admin login successful, token received
+
+🔍 Testing Get Contacts...
+✅ Passed - Status: 200
+✅ Retrieved 1 contacts
+
+🔍 Testing Get Admin Documents...
+✅ Passed - Status: 200
+✅ Retrieved 0 admin documents
+
+🔍 Testing Get Public Documents...
+✅ Passed - Status: 200
+✅ Retrieved 0 public documents
+
+==================================================
+📊 Test Summary: 6/6 tests passed
+==================================================
+✅ All tests passed!
+==================================================
