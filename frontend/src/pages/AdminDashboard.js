@@ -46,7 +46,7 @@ const AdminDashboard = () => {
   const fetchData = useCallback(async () => {
     try {
       const token = localStorage.getItem('adminToken');
-      const backendUrl = process.env.REACT_APP_BACKEND_URL;
+      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
       
       const headers = {
         'Authorization': `Bearer ${token}`
