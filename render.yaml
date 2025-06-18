@@ -6,7 +6,7 @@ services:
     startCommand: cd backend && python server.py
     envVars:
       - key: ADMIN_PASSWORD
-        value: $2b$10$Io.6j/U3VLbMJcAczAhAwOkSZck7xUtCVK8EGoGh7AEE72t6TKkLS
+        value: $2b$12$DoAAIgvwk9.MSAYnYV5fQeCSbk9aHgZz2Ff5pbgiU0uNsqXjjgSLO
       - key: ADMIN_USERNAME
         value: Babuu
       - key: APP_PASSWORD
