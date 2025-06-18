@@ -36,7 +36,7 @@ const AdminLogin = () => {
     setLoading(true);
 
     try {
-      const backendUrl = process.env.REACT_APP_BACKEND_URL;
+      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
       const response = await axios.post(`${backendUrl}/api/admin/login`, credentials);
       
       // Store token in localStorage
@@ -152,7 +152,7 @@ const AdminLogin = () => {
           >
             <h3 className="text-sm font-semibold text-gray-700 mb-2">Test Credentials:</h3>
             <div className="text-sm text-gray-600 space-y-1">
-              <p>Username: <code className="bg-gray-200 px-1 rounded">admin</code></p>
+              <p>Username: <code className="bg-gray-200 px-1 rounded">Babuu</code></p>
               <p>Password: <code className="bg-gray-200 px-1 rounded">Pass@2025</code></p>
             </div>
           </motion.div>

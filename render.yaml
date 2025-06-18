@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: ewebb-backend
+    env: python
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && python server.py
+    envVars:
+      - key: ADMIN_PASSWORD
+        value: $2b$10$Io.6j/U3VLbMJcAczAhAwOkSZck7xUtCVK8EGoGh7AEE72t6TKkLS
+      - key: ADMIN_USERNAME
+        value: Babuu
+      - key: APP_PASSWORD
+        value: vlgi tciy zwuu jxrp
+      - key: EMAIL_ADDRESS
+        value: jaysimburun@gmail.com
+      - key: MONGO_URL
+        value: Bb
+      - key: SECRET_KEY
+        value: Secret1
+        
+  - type: web
+    name: ewebb-frontend
+    env: node
+    buildCommand: cd frontend && yarn install && yarn build
+    startCommand: cd frontend && yarn start
+    envVars:
+      - key: REACT_APP_BACKEND_URL
+        value: https://ewebb-backend.onrender.com
