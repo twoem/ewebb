@@ -89,7 +89,7 @@ const AdminDashboard = () => {
     setUploadLoading(true);
     try {
       const token = localStorage.getItem('adminToken');
-      const backendUrl = process.env.REACT_APP_BACKEND_URL;
+      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
       
       const formData = new FormData();
       formData.append('file', uploadForm.file);
